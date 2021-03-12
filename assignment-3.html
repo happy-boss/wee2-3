@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+	<!--手機概念必須加上這行-->
+	<title>第一周作業</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript">
+
+	window.onload=function getData(){
+		let body=document.body;
+		console.log(body);
+		var req=new XMLHttpRequest();
+		req.open("get","https://padax.github.io/taipei-day-trip-resources/taipei-attractions.json");
+
+		req.onload=function(){
+			//alert(this.responseText);
+			let datastr = JSON.parse(req.responseText);
+			// JSON.parse是string轉object,方便撈取資料
+			// xhr.responseText 獲得字符串形式的響應數據。
+			var div = document.createElement("div");
+			div.classList.add("main");
+			
+			let place=datastr.result.results;
+			for(i=0;i<8;i++){
+			let fragment = document.createElement("div");
+			fragment.classList.add("box");
+			let title=place[i].stitle;
+			let picture =document.createElement("img");
+			picture.src="http://"+place[i].file.split("http://")[1];
+			picture.classList.add("img");
+			fragment.appendChild(picture);
+			let text = document.createElement("div");
+			text.classList.add("wt");
+			text.appendChild(document.createTextNode(place[i].stitle));
+			fragment.appendChild(text);
+			div.appendChild(fragment);
+			body.appendChild(div)
+			};
+			
+
+
+		};//onload 資料回傳可以方便弄資料
+		req.send();//送出連線
+	};
+	</script>	
+</head>
+<body>
+<div class="top">
+	<div class="logo">My Homework</div>
+	<div class="menu">
+		<img src="https://cdn4.iconfinder.com/data/icons/essential-app-2/16/burger-menu-more-panel-128.png"></img>
+	</div>
+	<div class="item">
+		<div>Item1</div>
+		<div>Item1</div>
+		<div>Item1</div>
+		<div>Item1</div>
+	</div>		
+</div>
+<div class="content">Welcome to Myhome</div>
+<div class="main">
+	<div class="box">
+		<img></img>
+		<div class="wt"></div>
+	</div>
+</div>
+</body>
+</html>
